@@ -7,12 +7,19 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "tests"
+    "test": "uvu -r tsm tests"
   },
   "repository": {
     "type": "git",
     "url": "not yet"
   },
   "author": "Ferran Llop",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "16.11.6",
+    "preconditions": "github:ferllop/preconditions",
+    "tsm": "2.1.4",
+    "typescript": "4.4.4",
+    "uvu": "0.5.2"
+  }
 }
