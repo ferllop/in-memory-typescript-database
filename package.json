@@ -2,15 +2,15 @@
   "name": "in-memory-database",
   "version": "0.0.1",
   "description": "An in memory database",
-  "exports": {
-      "./SyncDatabase": "./src/SyncDatabase.ts", 
-      "./AsyncDatabase": "./src/AsyncDatabase.ts"
-  },
-  "directories": {
-    "test": "tests"
-  },
+  "type": "module",
+  "main": "./build/index.js",
+  "files": [
+      "build/"
+  ],
   "scripts": {
-    "test": "uvu -r tsm tests"
+    "build": "npx tsc -p tsconfig.json",
+    "test": "uvu -r tsm tests",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,11 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "16.11.6",
-    "preconditions": "github:ferllop/preconditions",
     "tsm": "2.1.4",
     "typescript": "4.4.4",
     "uvu": "0.5.2"
+  },
+  "dependencies": {
+    "preconditions": "github:ferllop/preconditions"
   }
 }

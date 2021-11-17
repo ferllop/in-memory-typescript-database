@@ -7,10 +7,10 @@ import { Finder } from './Finder.js'
 export class AsyncDatabase implements Database {
 
   private syncDatabase = new SyncDatabase()
-  private DELAY_IN_MILLISECONDS
+  private DELAY_IN_MILLISECONDS: number
 
   constructor(delay: number = 0) {
-    this.setDelay(delay) 
+    this.DELAY_IN_MILLISECONDS = delay
   }
 
   insert(collection: string, entity: Entity) {
