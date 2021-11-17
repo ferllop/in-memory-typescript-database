@@ -6,45 +6,52 @@ import { Finder } from './Finder.js'
 
 export class AsyncDatabase implements Database {
 
-    private syncDatabase = new SyncDatabase()
-    private readonly DELAY_IN_MILLISECONDS = 0
+  private syncDatabase = new SyncDatabase()
+  private DELAY_IN_MILLISECONDS
 
-    insert(collection: string, entity: Entity) {
-        return this.promisify(this.syncDatabase.insert(collection, entity))
-    }
+  constructor(delay: number = 0) {
+    this.setDelay(delay) 
+  }
 
-    update(collection: string, entity: Entity) {
-        return this.promisify(this.syncDatabase.update(collection, entity))
-    }
+  insert(collection: string, entity: Entity) {
+    return this.promisify(this.syncDatabase.insert(collection, entity))
+  }
 
-    delete(collection: string, id: Id) {
-        return this.promisify(this.syncDatabase.delete(collection, id))
-    }
+  update(collection: string, entity: Entity) {
+    return this.promisify(this.syncDatabase.update(collection, entity))
+  }
 
-    find(collection: string, finder: Finder) {
-        return this.promisify(this.syncDatabase.find(collection, finder))
-    }
+  delete(collection: string, id: Id) {
+    return this.promisify(this.syncDatabase.delete(collection, id))
+  }
 
-    findById(collection: string, id: Id) {
-        return this.promisify(this.syncDatabase.findById(collection, id))
-    }
+  find(collection: string, finder: Finder) {
+    return this.promisify(this.syncDatabase.find(collection, finder))
+  }
 
-    private promisify<T>(something: T): Promise<T> {
-        return new Promise(resolve => {
-            setTimeout(() => resolve(something), this.DELAY_IN_MILLISECONDS)
-        })
-    }
+  findById(collection: string, id: Id) {
+    return this.promisify(this.syncDatabase.findById(collection, id))
+  }
 
-    getCollection(collection: string) {
-        return this.syncDatabase.getCollection(collection)
-    }
+  private promisify<T>(something: T): Promise<T> {
+    return new Promise(resolve => {
+      setTimeout(() => resolve(something), this.DELAY_IN_MILLISECONDS)
+    })
+  }
 
-    getCollections() {
-        return this.syncDatabase.getCollections()
-    }
+  getCollection(collection: string) {
+    return this.syncDatabase.getCollection(collection)
+  }
 
-    clean() {
-        return this.syncDatabase.clean()
-    }
+  getCollections() {
+    return this.syncDatabase.getCollections()
+  }
 
+  clean() {
+    return this.syncDatabase.clean()
+  }
+
+  setDelay(delay: number) {
+    this.DELAY_IN_MILLISECONDS = delay
+  }
 }
