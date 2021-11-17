@@ -81,7 +81,7 @@ export class SyncDatabase implements Database {
         return this.getCollection(collection).hasId(id)
     }
 
-    private hasCollection(collection: string) {
+    hasCollection(collection: string) {
         return this.collections.has(collection)
     }
 

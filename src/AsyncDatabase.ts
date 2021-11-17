@@ -39,6 +39,10 @@ export class AsyncDatabase implements Database {
     })
   }
 
+  hasCollection(collection: string) {
+      return this.syncDatabase.hasCollection(collection)
+  }
+
   getCollection(collection: string) {
     return this.syncDatabase.getCollection(collection)
   }

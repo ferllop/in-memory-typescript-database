@@ -10,17 +10,19 @@ type DataOrNull<T> = Result<T | null>
 type SyncOrAsync<T> = DataOrNull<T> | Promise<DataOrNull<T>>
 
 export interface Database {
-    insert(table: string, entity: Entity): SyncOrAsync<null>
+    insert(collection: string, entity: Entity): SyncOrAsync<null>
 
-    update(table: string, entity: Entity): SyncOrAsync<null>
+    update(collection: string, entity: Entity): SyncOrAsync<null>
 
-    delete(table: string, id: Id): SyncOrAsync<null>
+    delete(collection: string, id: Id): SyncOrAsync<null>
 
-    find(table: string, finder: Finder): SyncOrAsync<Entity[]>
+    find(collection: string, finder: Finder): SyncOrAsync<Entity[]>
 
-    findById(table: string, id: Id): SyncOrAsync<Entity | null>
+    findById(collection: string, id: Id): SyncOrAsync<Entity | null>
 
-    getCollection(table: string): Collection
+    hasCollection(collection: string): boolean
+
+    getCollection(collection: string): Collection
 
     getCollections(): Map<string, Collection>
 
