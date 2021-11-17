@@ -1,47 +1,90 @@
-import {Identified} from './Identified.js'
+import {Entity} from './Entity.js'
 import {precondition} from 'preconditions'
+import {Id} from './Id.js'
+import {ErrorType} from './ErrorType.js'
+import {DatabaseError} from './DatabaseError.js'
 
-export class Table {
-    private rows: Map<string, Identified>
+export class Collection {
+
+    private rows: Map<string, Entity>
 
     constructor() {
         this.rows = new Map()
+        this.create
+       }
+
+    create(entity: Entity) {
+        precondition(entity.id)
+        if (this.hasId(entity.id)) {
+            throw new DatabaseError(ErrorType.RESOURCE_ALREADY_EXISTS)
+        }
+        this.rows.set(entity.id, entity)
     }
 
-    create(dto: Identified): boolean {
-        precondition(dto.id)
-        const previousSize = this.rows.size
-        this.rows.set(dto.id, dto)
-        return this.rows.size === previousSize + 1
-    }
-
-    read(id: string): Identified | null {
+    read(id: Id): Entity | null {
         precondition(Boolean(id))
         const data = this.rows.get(id)
         return data ?? null
     }
 
-    update(dto: Identified): boolean {
-        precondition(dto.id)
-        if (!this.rows.has(dto.id)) {
-            return false
+    update(entity: Entity) {
+        precondition(entity.id)
+        if (!this.hasId(entity.id)) {
+            throw new DatabaseError(ErrorType.RESOURCE_DOES_NOT_EXISTS)
         }
-        const preUpdateData = this.read(dto.id)
-        this.rows.set(dto.id, {...preUpdateData, ...dto})
-        return true
+        const preUpdateData = this.read(entity.id)
+        this.rows.set(entity.id, {...preUpdateData, ...entity})
     }
 
-    delete(id: string): boolean {
-        return this.rows.delete(id)
+    delete(id: Id) {
+        const exists = this.rows.delete(id)
+        if (!exists) {
+            throw new DatabaseError(ErrorType.RESOURCE_DOES_NOT_EXISTS)
+        }
     }
 
-    find(finder: (dto: Identified) => boolean): Identified[] {
-        let result: Identified[] = []
+    find(finder: (entity: Entity) => boolean): Entity[] {
+        let result: Entity[] = []
         this.rows.forEach(row => {
             if (finder(row)) {
                 result = result.concat(row)
             }
         })
         return result
+    }
+
+    hasId(id: Id) {
+        return this.rows.has(id)
+    }
+
+    isNull() {
+        return false
+    }
+}
+
+export class NullCollection extends Collection {
+
+    create(entity: Entity): boolean {
+        return false
+    }
+
+    read(id: Id): Entity | null {
+        return null
+    }
+
+    update(entity: Entity): boolean {
+        return false
+    }
+
+    delete(id: Id): boolean {
+        return false
+    }
+
+    find(finder: (entity: Entity) => boolean): Entity[] {
+        return []
+    }
+
+    isNull() {
+        return true
     }
 }
