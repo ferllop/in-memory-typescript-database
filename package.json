@@ -1,6 +1,6 @@
 {
   "name": "in-memory-database",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An in memory database",
   "type": "module",
   "main": "./build/index.js",
