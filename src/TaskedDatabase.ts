@@ -9,12 +9,10 @@ import {Entity} from './Entity'
 import * as O from 'fp-ts/Option'
 import {Id} from './Id'
 import {Finder} from './Finder'
-import {AsyncDatabase} from './AsyncDatabase'
 import {ErrorType} from './ErrorType'
 
 class TaskedDatabase implements Database {
     private readonly _syncDb = new SyncDatabase()
-    private readonly _asyncDb = new AsyncDatabase()
 
     constructor(private readonly _delayInMilliseconds: number = 0) {
     }
