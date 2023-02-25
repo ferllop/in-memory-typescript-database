@@ -50,7 +50,9 @@ class TaskedDatabase implements Database {
     }
 
     findById(collection: string, id: Id): TE.TaskEither<DatabaseError, Entity> {
-        return this.makeTaskEither(this._syncDb.findById(collection, id))
+        const x = this._syncDb.findById(collection, id)
+        const nonNullResult = x.data === null && x.error.code === ErrorType.NO_ERROR ? Result.withErrorType(ErrorType.RESOURCE_DOES_NOT_EXISTS) : x
+        return this.makeTaskEither(nonNullResult)
     }
 
     getCollection(collection: string) {
