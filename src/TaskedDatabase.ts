@@ -11,7 +11,7 @@ import {Id} from './Id'
 import {Finder} from './Finder'
 import {ErrorType} from './ErrorType'
 
-class TaskedDatabase implements Database {
+export class TaskedDatabase implements Database {
     private readonly _syncDb = new SyncDatabase()
 
     constructor(private readonly _delayInMilliseconds: number = 0) {
