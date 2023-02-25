@@ -10,21 +10,21 @@ import {Option} from 'fp-ts/Option'
 
 type DataOrNull<T> = Result<T | null>
 
-type SyncOrAsync<T> =
+type ResultWrapper<T> =
     DataOrNull<T> |
     Promise<DataOrNull<T>> |
-    TaskEither<DatabaseError, Option<T>> | Task<Option<DatabaseError>>
+    TaskEither<DatabaseError, NonNullable<T>> | Task<Option<DatabaseError>>
 
 export interface Database {
-    insert(collection: string, entity: Entity): SyncOrAsync<null>
+    insert(collection: string, entity: Entity): ResultWrapper<null>
 
-    update(collection: string, entity: Entity): SyncOrAsync<null>
+    update(collection: string, entity: Entity): ResultWrapper<null>
 
-    delete(collection: string, id: Id): SyncOrAsync<null>
+    delete(collection: string, id: Id): ResultWrapper<null>
 
-    find(collection: string, finder: Finder): SyncOrAsync<Entity[]>
+    find(collection: string, finder: Finder): ResultWrapper<Entity[]>
 
-    findById(collection: string, id: Id): SyncOrAsync<Entity | null>
+    findById(collection: string, id: Id): ResultWrapper<Entity | null>
 
     hasCollection(collection: string): boolean
 
