@@ -4,15 +4,16 @@ import {Finder} from './Finder.js'
 import {Collection} from './Collection.js'
 import {DatabaseError} from './DatabaseError.js'
 import {Result} from './Result.js'
-import * as TE from 'fp-ts/TaskEither'
-import * as O from 'fp-ts/Option'
+import {TaskEither} from 'fp-ts/TaskEither'
+import {Task} from 'fp-ts/Task'
+import {Option} from 'fp-ts/Option'
 
 type DataOrNull<T> = Result<T | null>
 
 type SyncOrAsync<T> =
     DataOrNull<T> |
     Promise<DataOrNull<T>> |
-    TE.TaskEither<DatabaseError, O.Option<T>> | T.Task<O.Option<DatabaseError>>
+    TaskEither<DatabaseError, Option<T>> | Task<Option<DatabaseError>>
 
 export interface Database {
     insert(collection: string, entity: Entity): SyncOrAsync<null>
