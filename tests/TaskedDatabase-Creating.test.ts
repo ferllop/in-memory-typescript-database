@@ -1,7 +1,7 @@
 import {assert, suite} from './test-config.js'
 import {Result} from '../src/Result.js'
 import {ErrorType} from '../src/ErrorType.js'
-import {TaskedDatabase} from '../src/TaskedDatabase'
+import {getError, TaskedDatabase} from '../src/TaskedDatabase'
 import {none, some} from 'fp-ts/Option'
 import {right} from 'fp-ts/Either'
 
@@ -32,7 +32,7 @@ database('should return Some of RESOURCE_ALREADY_EXISTS error when duplicating a
     const dto = { id: 'someId', data: 'someData' }
     await (database.insert('a-table', dto)())
     const result = await (database.insert('a-table', dto)())
-    assert.equal(result, some(Result.withErrorType(ErrorType.RESOURCE_ALREADY_EXISTS).error))
+    assert.equal(result, some(getError(ErrorType.RESOURCE_ALREADY_EXISTS)))
 })
 
 database('should not modify the stored entity when duplicating the storage', async ({database}) => {

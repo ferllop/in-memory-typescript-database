@@ -1,7 +1,7 @@
 import {assert, suite} from './test-config.js'
 import {ErrorType} from '../src/ErrorType.js'
 import {Result} from '../src/Result.js'
-import {TaskedDatabase} from '../src/TaskedDatabase'
+import {getError, TaskedDatabase} from '../src/TaskedDatabase'
 import {none, some} from 'fp-ts/Option'
 import {left} from 'fp-ts/Either'
 
@@ -28,13 +28,13 @@ database('should return Some of RESOURCE_DOES_NOT_EXISTS error when deleting a n
     await (database.insert('aTable', dto)())
     const id = 'anID'
     const actual = await (database.delete('aTable', id)())
-    assert.equal(actual, some(Result.withErrorType(ErrorType.RESOURCE_DOES_NOT_EXISTS).error))
+    assert.equal(actual, some(getError(ErrorType.RESOURCE_DOES_NOT_EXISTS)))
 })
 
 database('should return Some of COLLECTION_DOES_NOT_EXISTS error when deleting from a non existing collection', async ({database}) => {
     const id = 'anID'
     const actual = await (database.delete('aTable', id)())
-    assert.equal(actual, some(Result.withErrorType(ErrorType.COLLECTION_DOES_NOT_EXISTS).error))
+    assert.equal(actual, some(getError(ErrorType.COLLECTION_DOES_NOT_EXISTS)))
 })
 
 database('should delete a dto with an id', async ({database}) => {
@@ -43,7 +43,7 @@ database('should delete a dto with an id', async ({database}) => {
     await (database.insert('aTable', dto)())
     await (database.delete('aTable', id)())
     const actual = await (database.findById('aTable', id)())
-    assert.equal(actual, left(Result.withErrorType(ErrorType.RESOURCE_DOES_NOT_EXISTS).error))
+    assert.equal(actual, left(getError(ErrorType.RESOURCE_DOES_NOT_EXISTS)))
 })
 
 database.run()

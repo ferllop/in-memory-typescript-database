@@ -1,7 +1,6 @@
 import {assert, suite} from './test-config.js'
 import {ErrorType} from '../src/ErrorType.js'
-import {TaskedDatabase} from '../src/TaskedDatabase'
-import {DatabaseError} from '../src/DatabaseError'
+import {getError, TaskedDatabase} from '../src/TaskedDatabase'
 import {none, some} from 'fp-ts/Option'
 import {Either, map, right} from 'fp-ts/Either'
 
@@ -27,13 +26,13 @@ database('should return Some of RESOURCE_DOES_NOT_EXISTS error when updating a n
     database.insert('aTable', dto)
     const otherDto = {...dto, id: 'otherId'}
     const result = await (database.update('aTable', otherDto)())
-    assert.equal(result, some(new DatabaseError(ErrorType.RESOURCE_DOES_NOT_EXISTS)))
+    assert.equal(result, some(getError(ErrorType.RESOURCE_DOES_NOT_EXISTS)))
 })
 
 database('should return Some of COLLECTION_DOES_NOT_EXISTS when updating a non-existing collection', async ({database}) => {
     const dto = {id: 'anID', data: 'someData'}
     const result = await (database.update('aTable', dto)())
-    assert.equal(result, some(new DatabaseError(ErrorType.COLLECTION_DOES_NOT_EXISTS)))
+    assert.equal(result, some(getError(ErrorType.COLLECTION_DOES_NOT_EXISTS)))
 })
 
 database('should update a dto with an id property', async ({database}) => {
