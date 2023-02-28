@@ -2,7 +2,7 @@ import {SyncDatabase} from '../src/SyncDatabase.js'
 import {assert, suite} from './test-config.js'
 import {Context} from './SyncDatabase.test.js'
 import {Result} from '../src/Result.js'
-import {ErrorType} from '../src/ErrorType.js'
+import {NoError, ResourceAlreadyExistsError} from '../src/DatabaseError'
 
 const database = suite<Context>('In-memory database when creating')
 
@@ -13,7 +13,7 @@ database.before.each( context => {
 database('should return NO_ERROR when storing a dto', ({database}) => {
     const dto = { id: 'someId', data: 'someData' }
     const result = database.insert('a-table', dto)
-    assert.equal(result.error.code, ErrorType.NO_ERROR)
+    assert.equal(result.error, new NoError())
 })
 
 database('should store a dto with an id property', ({database}) => {
@@ -26,7 +26,7 @@ database('should return RESOURCE_ALREADY_EXISTS error when duplicating an entity
     const dto = { id: 'someId', data: 'someData' }
     database.insert('a-table', dto)
     const result = database.insert('a-table', dto)
-    assert.equal(result, Result.withErrorType(ErrorType.RESOURCE_ALREADY_EXISTS))
+    assert.equal(result, Result.withError(new ResourceAlreadyExistsError()))
 })
 
 database('should not modify the stored entity when duplicating the storage', ({database}) => {

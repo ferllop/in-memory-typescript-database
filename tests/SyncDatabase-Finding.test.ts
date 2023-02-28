@@ -15,14 +15,14 @@ database('should return an empty array where there are no coincidences', ({datab
     assert.is(result.data?.length, 0)
 })
 
-database('should return an array whith one coincidence', ({database}) => {
+database('should return an array with one coincidence', ({database}) => {
     const table = 'aTable'
     database.insert(table, {id: 'a', data: 'thing'})
     const result = database.find('aTable', (row: any) => row.data === 'thing')
     assert.is(result.data?.length, 1)
 })
 
-database('should return an array whith all the coincidences', ({database}) => {
+database('should return an array with all the coincidences', ({database}) => {
     const table = 'aTable'
     const dtoA = {id: 'a', label: 'labelA'}
     const dtoB = {id: 'b', label: 'labelA'}

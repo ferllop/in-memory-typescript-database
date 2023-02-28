@@ -1,8 +1,7 @@
 import {assert, suite} from './test-config.js'
-import {Database} from '../src/Database.js'
 import {SyncDatabase} from '../src/SyncDatabase.js'
-import {ErrorType} from '../src/ErrorType.js'
 import {Result} from '../src/Result.js'
+import {CollectionDoesNotExistsError} from '../src/DatabaseError'
 
 export type Context = {
     database: SyncDatabase
@@ -21,7 +20,7 @@ database('should be capable of clean itself', ({database}) => {
     database.clean()
     assert.equal(
         database.find(table, () => true),
-        Result.withErrorType(ErrorType.COLLECTION_DOES_NOT_EXISTS) )
+        Result.withError(new CollectionDoesNotExistsError(table)) )
 })
 
 database.run()

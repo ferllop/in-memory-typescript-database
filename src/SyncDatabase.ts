@@ -3,9 +3,8 @@ import {Id} from './Id'
 import {Entity} from './Entity.js'
 import {Finder} from './Finder'
 import {Collection, NullCollection} from './Collection.js'
-import {ErrorType} from './ErrorType.js'
 import {Result} from './Result.js'
-import {DatabaseError} from './DatabaseError.js'
+import {CollectionDoesNotExistsError, DatabaseError} from './DatabaseError.js'
 
 export class SyncDatabase implements Database {
 
@@ -30,7 +29,7 @@ export class SyncDatabase implements Database {
 
     update(collection: string, entity: Entity) {
         if (!this.hasCollection(collection)) {
-            return Result.withErrorType(ErrorType.COLLECTION_DOES_NOT_EXISTS)
+            return Result.withError(new CollectionDoesNotExistsError(collection))
         }
 
         try {
@@ -47,7 +46,7 @@ export class SyncDatabase implements Database {
 
     delete(collection: string, id: Id) {
         if (!this.hasCollection(collection)) {
-            return Result.withErrorType(ErrorType.COLLECTION_DOES_NOT_EXISTS)
+            return Result.withError(new CollectionDoesNotExistsError(collection))
         }
 
         try {
@@ -64,14 +63,14 @@ export class SyncDatabase implements Database {
 
     find(collection: string, finder: Finder) {
         if (!this.hasCollection(collection)) {
-            return Result.withErrorType(ErrorType.COLLECTION_DOES_NOT_EXISTS)
+            return Result.withError(new CollectionDoesNotExistsError(collection))
         }
         return Result.ok(this.getCollection(collection)?.find(finder) ?? [])
     }
 
     findById(collection: string, id: Id) {
         if (this.getCollection(collection).isNull()) {
-            return Result.withErrorType(ErrorType.COLLECTION_DOES_NOT_EXISTS)
+            return Result.withError(new CollectionDoesNotExistsError(collection))
         }
 
         return Result.ok(this.getCollection(collection).read(id) ?? null)

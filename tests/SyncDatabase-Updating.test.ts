@@ -1,7 +1,7 @@
 import {assert, suite} from './test-config.js'
 import {Context} from './SyncDatabase.test.js'
 import {SyncDatabase} from '../src/SyncDatabase.js'
-import {ErrorType} from '../src/ErrorType.js'
+import {CollectionDoesNotExistsError, NoError, ResourceDoesNotExistsError} from '../src/DatabaseError'
 
 const database = suite<Context>('In-memory database when updating')
 
@@ -13,7 +13,7 @@ database('should return NO_ERROR when updating a dto with an id property', ({dat
     const dto = {id: 'anID', data: 'someData'}
     database.insert('aTable', dto)
     const result = database.update('aTable', dto)
-    assert.equal(result.error.code, ErrorType.NO_ERROR)
+    assert.equal(result.error, new NoError())
 })
 
 database('should return RESOURCE_DOES_NOT_EXISTS when updating a non-existing dto', ({database}) => {
@@ -21,13 +21,14 @@ database('should return RESOURCE_DOES_NOT_EXISTS when updating a non-existing dt
     database.insert('aTable', dto)
     const otherDto = {...dto, id: 'otherId'}
     const result = database.update('aTable', otherDto)
-    assert.equal(result.error.code, ErrorType.RESOURCE_DOES_NOT_EXISTS)
+    assert.equal(result.error, new ResourceDoesNotExistsError())
 })
 
 database('should return COLLECTION_DOES_NOT_EXISTS when updating a non-existing collection', ({database}) => {
+    const nonExistingCollection = 'aCollection'
     const dto = {id: 'anID', data: 'someData'}
-    const result = database.update('aTable', dto)
-    assert.equal(result.error.code, ErrorType.COLLECTION_DOES_NOT_EXISTS)
+    const result = database.update(nonExistingCollection, dto)
+    assert.equal(result.error, new CollectionDoesNotExistsError(nonExistingCollection))
 })
 
 database('should update a dto with an id property', ({database}) => {

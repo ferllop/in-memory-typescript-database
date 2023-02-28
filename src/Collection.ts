@@ -1,8 +1,7 @@
 import {Entity} from './Entity.js'
 import {precondition} from 'preconditions'
 import {Id} from './Id.js'
-import {ErrorType} from './ErrorType.js'
-import {DatabaseError} from './DatabaseError.js'
+import {ResourceAlreadyExistsError, ResourceDoesNotExistsError} from './DatabaseError.js'
 
 export class Collection {
 
@@ -10,13 +9,12 @@ export class Collection {
 
     constructor() {
         this.rows = new Map()
-        this.create
        }
 
     create(entity: Entity) {
         precondition(entity.id)
         if (this.hasId(entity.id)) {
-            throw new DatabaseError(ErrorType.RESOURCE_ALREADY_EXISTS)
+            throw new ResourceAlreadyExistsError()
         }
         this.rows.set(entity.id, entity)
     }
@@ -30,7 +28,7 @@ export class Collection {
     update(entity: Entity) {
         precondition(entity.id)
         if (!this.hasId(entity.id)) {
-            throw new DatabaseError(ErrorType.RESOURCE_DOES_NOT_EXISTS)
+            throw new ResourceDoesNotExistsError()
         }
         const preUpdateData = this.read(entity.id)
         this.rows.set(entity.id, {...preUpdateData, ...entity})
@@ -39,7 +37,7 @@ export class Collection {
     delete(id: Id) {
         const exists = this.rows.delete(id)
         if (!exists) {
-            throw new DatabaseError(ErrorType.RESOURCE_DOES_NOT_EXISTS)
+            throw new ResourceDoesNotExistsError()
         }
     }
 

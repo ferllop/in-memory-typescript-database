@@ -19,7 +19,7 @@ database('should return a Right of empty array when there are no coincidences', 
     assert.equal(result, right([]))
 })
 
-database('should return Right of an array whith one coincidence', async ({database}) => {
+database('should return Right of an array with one coincidence', async ({database}) => {
     const table = 'aTable'
     const entity = {id: 'a', data: 'thing'}
     await (database.insert(table, entity)())

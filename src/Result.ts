@@ -1,5 +1,4 @@
-import {ErrorType} from './ErrorType.js'
-import {DatabaseError} from './DatabaseError.js'
+import {DatabaseError, NoError} from './DatabaseError.js'
 
 export class Result<T> {
     private constructor(
@@ -16,11 +15,7 @@ export class Result<T> {
     }
 
     static ok<T>(data: T) {
-        return new Result(new DatabaseError(ErrorType.NO_ERROR), data)
-    }
-
-    static withErrorType(errorType: ErrorType) {
-        return new Result(new DatabaseError(errorType), null)
+        return new Result(new NoError(), data)
     }
 
     static withError(error: DatabaseError) {

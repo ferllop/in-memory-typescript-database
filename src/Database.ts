@@ -7,14 +7,13 @@ import {Result} from './Result.js'
 import {TaskEither} from 'fp-ts/TaskEither'
 import {Task} from 'fp-ts/Task'
 import {Option} from 'fp-ts/Option'
-import {TaskedDatabaseError} from './TaskedDatabase'
 
 type DataOrNull<T> = Result<T | null>
 
 type ResultWrapper<T> =
     DataOrNull<T> |
     Promise<DataOrNull<T>> |
-    TaskEither<TaskedDatabaseError, NonNullable<T>> | Task<Option<TaskedDatabaseError>>
+    TaskEither<DatabaseError, NonNullable<T>> | Task<Option<DatabaseError>>
 
 export interface Database {
     insert(collection: string, entity: Entity): ResultWrapper<null>
