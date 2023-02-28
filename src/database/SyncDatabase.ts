@@ -1,10 +1,11 @@
 import {Database} from './Database'
-import {Id} from './Id'
-import {Entity} from './Entity.js'
-import {Finder} from './Finder'
-import {Collection, NullCollection} from './Collection.js'
-import {Result} from './Result.js'
-import {CollectionDoesNotExistsError, DatabaseError} from './DatabaseError.js'
+import {Id} from './models/Id'
+import {Entity} from './models/Entity.js'
+import {Finder} from './models/Finder'
+import {Collection, NullCollection} from './models/Collection.js'
+import {Result} from './models/Result.js'
+import {DatabaseError} from '../error/DatabaseError.js'
+import {CollectionDoesNotExistsError} from '../error/CollectionDoesNotExistsError'
 
 export class SyncDatabase implements Database {
 

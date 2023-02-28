@@ -1,7 +1,7 @@
 import {assert, suite} from './test-config.js'
-import {SyncDatabase} from '../src/SyncDatabase.js'
-import {Result} from '../src/Result.js'
-import {CollectionDoesNotExistsError} from '../src/DatabaseError'
+import {SyncDatabase} from '../src/database/SyncDatabase.js'
+import {Result} from '../src/database/models/Result.js'
+import {CollectionDoesNotExistsError} from '../src'
 
 export type Context = {
     database: SyncDatabase

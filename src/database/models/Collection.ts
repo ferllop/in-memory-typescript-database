@@ -1,7 +1,8 @@
 import {Entity} from './Entity.js'
 import {precondition} from 'preconditions'
 import {Id} from './Id.js'
-import {ResourceAlreadyExistsError, ResourceDoesNotExistsError} from './DatabaseError.js'
+import {ResourceDoesNotExistsError} from '../../error/ResourceDoesNotExistsError'
+import {ResourceAlreadyExistsError} from '../../error/ResourceAlreadyExistsError'
 
 export class Collection {
 

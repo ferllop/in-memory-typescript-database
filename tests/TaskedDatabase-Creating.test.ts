@@ -1,8 +1,8 @@
 import {assert, suite} from './test-config.js'
-import {TaskedDatabase} from '../src/TaskedDatabase'
+import {TaskedDatabase} from '../src/database/TaskedDatabase'
 import {none, some} from 'fp-ts/Option'
 import {right} from 'fp-ts/Either'
-import {ResourceAlreadyExistsError} from '../src/DatabaseError'
+import {ResourceAlreadyExistsError} from '../src/error/ResourceAlreadyExistsError'
 
 type Context = {
     database: TaskedDatabase

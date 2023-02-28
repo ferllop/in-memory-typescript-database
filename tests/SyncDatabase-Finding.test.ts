@@ -1,6 +1,6 @@
 import {assert, suite} from './test-config.js'
 import {Context} from './SyncDatabase.test.js'
-import {SyncDatabase} from '../src/SyncDatabase.js'
+import {SyncDatabase} from '../src/database/SyncDatabase.js'
 
 const database = suite<Context>('In-memory database when searching')
 

@@ -1,8 +1,8 @@
 import {SyncDatabase} from './SyncDatabase.js'
-import {Entity} from './Entity.js'
+import {Entity} from './models/Entity.js'
 import {Database} from './Database.js'
-import {Id} from './Id.js'
-import { Finder } from './Finder.js'
+import {Id} from './models/Id.js'
+import { Finder } from './models/Finder.js'
 
 export class AsyncDatabase implements Database {
 

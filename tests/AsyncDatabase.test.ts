@@ -1,5 +1,5 @@
 import { assert, suite } from './test-config.js'
-import { AsyncDatabase } from '../src/AsyncDatabase.js'
+import { AsyncDatabase } from '../src/database/AsyncDatabase.js'
 
 type Context = {
   database: AsyncDatabase

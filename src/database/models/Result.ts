@@ -1,4 +1,5 @@
-import {DatabaseError, NoError} from './DatabaseError.js'
+import {DatabaseError} from '../../error/DatabaseError.js'
+import {NoError} from '../../error/NoError'
 
 export class Result<T> {
     private constructor(

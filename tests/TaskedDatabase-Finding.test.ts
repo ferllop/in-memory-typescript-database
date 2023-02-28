@@ -1,5 +1,5 @@
 import {assert, suite} from './test-config.js'
-import {TaskedDatabase} from '../src/TaskedDatabase'
+import {TaskedDatabase} from '../src/database/TaskedDatabase'
 import {right} from 'fp-ts/Either'
 
 type Context = {

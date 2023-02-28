@@ -1,8 +1,9 @@
-import {SyncDatabase} from '../src/SyncDatabase.js'
+import {SyncDatabase} from '../src/database/SyncDatabase.js'
 import {assert, suite} from './test-config.js'
 import {Context} from './SyncDatabase.test.js'
-import {Result} from '../src/Result.js'
-import {NoError, ResourceAlreadyExistsError} from '../src/DatabaseError'
+import {Result} from '../src/database/models/Result.js'
+import {NoError} from '../src/error/NoError'
+import {ResourceAlreadyExistsError} from '../src/error/ResourceAlreadyExistsError'
 
 const database = suite<Context>('In-memory database when creating')
 

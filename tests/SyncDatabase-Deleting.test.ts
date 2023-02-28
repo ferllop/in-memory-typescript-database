@@ -1,8 +1,9 @@
 import {assert, suite} from './test-config.js'
 import {Context} from './SyncDatabase.test.js'
-import {SyncDatabase} from '../src/SyncDatabase.js'
-import {Result} from '../src/Result.js'
-import {CollectionDoesNotExistsError, NoError, ResourceDoesNotExistsError} from '../src/DatabaseError'
+import {SyncDatabase} from '../src/database/SyncDatabase.js'
+import {Result} from '../src/database/models/Result.js'
+import {NoError} from '../src/error/NoError'
+import {CollectionDoesNotExistsError, ResourceDoesNotExistsError} from '../src'
 
 const database = suite<Context>('In-memory database when deleting')
 

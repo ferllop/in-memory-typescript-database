@@ -1,14 +1,16 @@
 import {Database} from './Database'
 import {SyncDatabase} from './SyncDatabase'
-import {Result} from './Result'
+import {Result} from './models/Result'
 import * as T from 'fp-ts/Task'
 import * as TE from 'fp-ts/TaskEither'
 import * as E from 'fp-ts/Either'
-import {Entity} from './Entity'
+import {Entity} from './models/Entity'
 import * as O from 'fp-ts/Option'
-import {Id} from './Id'
-import {Finder} from './Finder'
-import {DatabaseError, NoError, ResourceDoesNotExistsError} from './DatabaseError'
+import {Id} from './models/Id'
+import {Finder} from './models/Finder'
+import {DatabaseError} from '../error/DatabaseError'
+import {NoError} from '../error/NoError'
+import {ResourceDoesNotExistsError} from '../error/ResourceDoesNotExistsError'
 
 export class TaskedDatabase implements Database {
     private readonly _syncDb = new SyncDatabase()
